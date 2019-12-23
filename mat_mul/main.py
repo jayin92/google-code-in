@@ -1,7 +1,9 @@
 import numpy as np
+import numba as nb
 import matplotlib.pyplot as plt
 from time import time
 
+@nb.jit(nopython=True, nogil=True)
 def normal_mul(a, b):
     size = a.shape[0]
     res = np.zeros((size, size))
@@ -17,7 +19,9 @@ if __name__ == "__main__":
     x = []
     normal_y = []
     np_y = []
-    for n in range(1, 10 ** 2):
+    for n in range(1, 10 ** 3):
+        print("-------")
+        print(n)
         size = n
         x.append(size)
 
@@ -37,6 +41,6 @@ if __name__ == "__main__":
     plt.plot(x, normal_y)
     plt.plot(x, np_y)
 
-    plt.legend(['Normal Python', 'Numpy matmul'], loc="upper left")
+    plt.legend(['Normal Python with Numba', 'Numpy matmul'], loc="upper left")
     plt.show()
 
